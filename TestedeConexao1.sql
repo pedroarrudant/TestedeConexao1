@@ -1,13 +1,3 @@
-﻿CREATE TABLE TbAppTeste
-(
-	id INT NOT NULL PRIMARY KEY,
-	nome VARCHAR(10),
-	sobrenome VARCHAR(20),
-	sexo VARCHAR(2)
-)
-
-DROP TABLE TbAppTeste
-
 CREATE TABLE TbAppTeste
 (
 	id INT NOT NULL PRIMARY KEY IDENTITY,
@@ -15,9 +5,3 @@ CREATE TABLE TbAppTeste
 	sobrenome VARCHAR(20),
 	sexo VARCHAR(2)
 )
-
-SELECT * FROM TbAppTeste
-
-DELETE FROM TbAppTeste WHERE id = 4
-
-COMMIT TRANSACTION
