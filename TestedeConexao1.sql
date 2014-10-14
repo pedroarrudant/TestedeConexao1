@@ -1,12 +1,4 @@
-﻿CREATE TABLE TbAppTeste
-(
-	id INT NOT NULL PRIMARY KEY,
-	nome VARCHAR(10),
-	sobrenome VARCHAR(20),
-	sexo VARCHAR(2)
-)
-
-DROP TABLE TbAppTeste
+﻿CREATE DATABASE Teste1
 
 CREATE TABLE TbAppTeste
 (
@@ -16,8 +8,19 @@ CREATE TABLE TbAppTeste
 	sexo VARCHAR(2)
 )
 
-SELECT * FROM TbAppTeste
+CREATE PROCEDURE sp_SELECAO 
+AS
+BEGIN
+	SELECT * FROM TbAppTeste;
+END
+GO
 
-DELETE FROM TbAppTeste WHERE id = 4
-
-COMMIT TRANSACTION
+CREATE PROCEDURE sp_INSERCAO
+@nome VARCHAR(10),
+@sobrenome VARCHAR(20),
+@sexo VARCHAR(2)
+AS
+BEGIN
+	INSERT INTO TbAppTeste VALUES (@nome,@sobrenome,@sexo);
+END
+GO

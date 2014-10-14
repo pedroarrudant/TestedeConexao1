@@ -21,53 +21,60 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string strcon = "Server=localhost;Database=Teste1;Trusted_Connection=True";
+            SqlConnection conexao = new SqlConnection(strcon);
             try
             {
-                string strcon = "Server=localhost;Database=Teste1;Trusted_Connection=True";
-                SqlConnection conexao = new SqlConnection(strcon);
-                SqlCommand cmd2 = new SqlCommand("SELECT * FROM TbAppTeste", conexao);
+                SqlCommand cmd2 = new SqlCommand("dbo.sp_SELECAO", conexao);
                 conexao.Open(); 
-                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter da = new SqlDataAdapter(cmd2);
                 DataTable pessoa = new DataTable();
                 da.Fill(pessoa);
                 dataGridView1.DataSource = pessoa;
                 dataGridView1.Enabled = false;
-                conexao.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro" + ex.Message);
             }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            string strcon = "Server=localhost;Database=Teste1;Trusted_Connection=True";
+            SqlConnection conexao = new SqlConnection(strcon);            
             try
             {
                 string nome = "", sobrenome = "", sexo = "";
-                string strcon = "Server=localhost;Database=Teste1;Trusted_Connection=True";
-                SqlConnection conexao = new SqlConnection(strcon);
                 nome = txtNome.Text;
                 sobrenome = txtSobrenome.Text;
                 sexo = txtSexo.Text;
-                SqlCommand cmd = new SqlCommand("INSERT INTO TbAppTeste Values (@nome, @sobrenome, @sexo)", conexao);
-                SqlCommand cmd2 = new SqlCommand("SELECT * FROM TbAppTeste", conexao);
+                SqlCommand cmd = new SqlCommand("dbo.sp_INSERCAO", conexao);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@nome", nome);
                 cmd.Parameters.AddWithValue("@sobrenome", sobrenome);
                 cmd.Parameters.AddWithValue("@sexo", sexo);
+                SqlCommand cmd2 = new SqlCommand("dbo.sp_SELECAO", conexao);
+                cmd2.CommandType = CommandType.StoredProcedure;
                 conexao.Open();
                 cmd.ExecuteNonQuery();
-                cmd2.CommandType = CommandType.Text;
                 SqlDataAdapter da = new SqlDataAdapter(cmd2);
                 DataTable pessoa = new DataTable();
                 da.Fill(pessoa);
                 dataGridView1.DataSource = pessoa;
-                conexao.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
             }
         }
     }
